@@ -128,7 +128,7 @@
 
 				<!-- ko if: $root[field_name] -->
 					<div class="image_container">
-						<img data-bind="attr: {src: file_url + '?path=' + location + $root[field_name]()}" />
+						<img data-bind="attr: {src: $root[field_name]()}" />
 						<input type="button" class="remove_button" data-bind="click: function() {$root[field_name](null)}" value="x" />
 					</div>
 				<!-- /ko -->
@@ -148,7 +148,7 @@
 
 				<!-- ko if: $root[field_name] -->
 					<div class="file_container">
-						<a data-bind="attr: {href: file_url + '?path=' + location + $root[field_name](), title: $root[field_name]},
+						<a data-bind="attr: {href: $root[field_name](), title: $root[field_name]},
 							text: $root[field_name]"></a>
 						<input type="button" class="remove_button" data-bind="click: function() {$root[field_name](null)}" value="x" />
 					</div>

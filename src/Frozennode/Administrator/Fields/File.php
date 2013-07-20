@@ -55,14 +55,37 @@ class File extends Field {
 	 */
 	public function doUpload()
 	{
-		$mimes = $this->getOption('mimes') ? '|mimes:' . $this->getOption('mimes') : '';
+		if(!\Input::hasFile('file') && !\Input::hasFile('upload')) {
+       return Response::json('No file was uploaded.');
+    }
 
-		//use the multup library to perform the upload
-		$result = Multup::open('file', 'max:' . $this->getOption('size_limit') * 1000 . $mimes, $this->getOption('location'),
-									$this->getOption('naming') === 'random')
-			->set_length($this->getOption('length'))
-			->upload();
+    $file = \Input::file('file', \Input::get('upload'));
+    $path = $file->getRealPath();
 
-		return $result[0];
+    // generate random filename
+    $filename = uniqid($this->getOption('prefix')).'.'.$file->guessExtension();
+
+    $image = \PHPImageWorkshop\ImageWorkshop::initFromPath($path);
+
+    // Resize to 600 wide maintain ratio
+    $image->resizeInPixel(256, 256, true, 0, 0, 'MM');
+    $image->save(dirname($path), basename($path));
+
+    // upload to Amazon S3
+    $s3 = \AWS::get('s3');
+    $putCommand = $s3->getCommand('PutObject', array(
+        'Bucket'      => $this->getOption('bucket'),
+        'Key'         => $filename,
+        'SourceFile'  => $path,
+        'ACL'         => 'public-read',
+    ));
+
+    $putCommand->execute();
+    $linkToObject = $putCommand->getRequest()->getUrl();
+
+    // remove old file
+    \File::delete($path);
+
+    return array('errors' => array(), 'filename' => $linkToObject);
 	}
 }
