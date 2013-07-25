@@ -504,7 +504,11 @@
 						{
 							self.statusMessage(messages.success).statusMessageType('success');
 							self.updateRows();
-							self.setData(response.data);
+							
+							if(response.set_data !== undefined && response.set_data == true) {
+								self.setData(response.data);
+								self.updateSelfRelationships();
+							}
 							
 							if(response.close !== undefined)
 							{
