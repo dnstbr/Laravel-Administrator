@@ -84,7 +84,7 @@ class DataTable {
 		//get things going by grouping the set
 		$table = $model->getTable();
 		$keyName = $model->getKeyName();
-		$query = $model->groupBy($table . '.' . $keyName);
+		$query = $model->withTrashed()->groupBy($table . '.' . $keyName);
 		$dbQuery = $query->getQuery();
 		$countQuery = $dbQuery->getConnection()->table($table)->groupBy($table . '.' . $keyName);
 

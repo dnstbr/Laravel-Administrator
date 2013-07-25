@@ -505,6 +505,14 @@
 							self.statusMessage(messages.success).statusMessageType('success');
 							self.updateRows();
 							self.setData(response.data);
+							
+							if(response.close !== undefined)
+							{
+								setTimeout(function()
+								{
+									History.pushState({modelName: self.modelName()}, null, route + self.modelName());
+								}, 500);
+							}
 						}
 						else
 							self.statusMessage(response.error).statusMessageType('error');

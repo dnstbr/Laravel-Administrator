@@ -120,7 +120,7 @@ class Config extends ConfigBase implements ConfigInterface {
 		}
 
 		//get the model by id
-		$model = $model->find($id, $columns);
+		$model = $model->withTrashed()->find($id, $columns);
 		$model = $model ? $model : $originalModel;
 
 		//if the model exists, load up the existing related items
@@ -275,7 +275,7 @@ class Config extends ConfigBase implements ConfigInterface {
 	public function updateModel($model, FieldFactory $fieldFactory, ActionFactory $actionFactory)
 	{
 		//set the data model to the active model
-		$this->setDataModel($model->find($model->getKey()));
+		$this->setDataModel($model->withTrashed()->find($model->getKey()));
 
 		//include the item link if one was supplied
 		if ($link = $this->getModelLink())
@@ -305,7 +305,7 @@ class Config extends ConfigBase implements ConfigInterface {
 	 */
 	public function save(\Illuminate\Http\Request $input, array $fields, array $actionPermissions = null, $id = 0)
 	{
-		$model = $this->getDataModel()->find($id);
+		$model = $this->getDataModel()->withTrashed()->find($id);
 
 		//fetch the proper model so we don't have to deal with any extra attributes
 		if (!$model)
