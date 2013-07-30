@@ -266,7 +266,19 @@ class AdminController extends Controller
 				$model = $config->updateModel($model, $fieldFactory, $actionFactory);
 			}
 
-			$response = array('success' => true, 'data' => $model->toArray());
+			try {
+				$set_data = $action->getOption('set_data')
+			} catch {
+				$set_data = true;
+			}
+			
+			try {
+				$close = $action->getOption('close');
+			} catch {
+				$close = false;
+			}
+			
+			$response = array('success' => true, 'data' => $model->toArray(), 'set_data' => $set_data, 'close' => $close);
 
 			//if it's a download response, flash the response to the seession and return the download link
 			if (is_a($result, 'Symfony\Component\HttpFoundation\BinaryFileResponse'))
