@@ -31,7 +31,8 @@
 
 			<!-- ko if: type === 'wysiwyg' -->
 				<!-- ko if: editable -->
-					<textarea data-bind="attr: {disabled: $root.freezeForm, id: field_id}, wysiwyg: $root[field_name]"></textarea>
+					<textarea class="wysiwyg" data-bind="attr: {disabled: $root.freezeForm, id: field_id},
+								wysiwyg: {value: $root[field_name], id: field_id}"></textarea>
 				<!-- /ko -->
 				<!-- ko ifnot: editable -->
 					<div class="uneditable" data-bind="html: $root[field_name]"></div>
@@ -77,10 +78,8 @@
 			<!-- /ko -->
 
 			<!-- ko if: type === 'enum' -->
-				<select data-bind="attr: {disabled: $root.freezeForm, id: field_id}, value: $root[field_name], chosen: true, options: options,
-															optionsValue: function(item) {return item.value},
-															optionsText: function(item) {return item.text},
-															optionsCaption: '<?php echo trans('administrator::administrator.none') ?>'"></select>
+				<input type="hidden" data-bind="attr: {disabled: $root.freezeForm, id: field_id}, value: $root[field_name],
+												select2: {data: {results: options}}" />
 			<!-- /ko -->
 
 			<!-- ko if: type === 'date' -->
