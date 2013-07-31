@@ -268,13 +268,13 @@ class AdminController extends Controller
 
 			try {
 				$set_data = $action->getOption('set_data')
-			} catch {
+			} catch(Exception $e) {
 				$set_data = true;
 			}
 			
 			try {
 				$close = $action->getOption('close');
-			} catch {
+			} catch(Exception $e) {
 				$close = false;
 			}
 			
