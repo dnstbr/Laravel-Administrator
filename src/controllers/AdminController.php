@@ -267,7 +267,7 @@ class AdminController extends Controller
 			}
 
 			try {
-				$set_data = $action->getOption('set_data')
+				$set_data = $action->getOption('set_data');
 			} catch(Exception $e) {
 				$set_data = true;
 			}
