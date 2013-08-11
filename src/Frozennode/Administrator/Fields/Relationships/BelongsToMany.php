@@ -57,13 +57,19 @@ class BelongsToMany extends Relationship {
 		if ($sortField = $this->getOption('sort_field'))
 		{
 			//first delete all the old records
-			$relationship->delete();
-
+			//$relationship->delete();
+			
+			$relationships = array();
+			
 			//then re-attach them in the correct order
 			foreach ($input as $i => $item)
 			{
-				$relationship->attach($item, array($sortField => $i));
+				$relationships[] = array($item => array($sortField => $i));
+				//$relationship->attach($item, array($sortField => $i));
 			}
+			
+			//
+			$relationship->sync($relationships);
 		}
 		else
 		{
