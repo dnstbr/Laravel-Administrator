@@ -62,15 +62,19 @@ class BelongsToMany extends Relationship {
 			//then re-attach them in the correct order
 			foreach ($input as $i => $item)
 			{
-				$relationships[] = array($item => array($sortField => $i));
+				$relationships[$item] = array($sortField => $i);
 				//$relationship->attach($item, array($sortField => $i));
 			}
+			
+			//\Log::debug(print_r($relationships, true));
 			
 			//
 			$relationship->sync($relationships);
 		}
 		else
 		{
+			//\Log::debug(print_r($input, true));
+			
 			//elsewise the order doesn't matter, so use sync
 			$relationship->sync($input);
 		}
