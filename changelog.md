@@ -1,5 +1,18 @@
 ## Changelog
 
+### 4.7.0
+- Custom pages are now available with the 'page.{path}.{to}.{view}' menu syntax
+- New translations (ca)
+- Bugfix: Autocomplete relationship fields weren't respecting prefixed table names
+
+### 4.6.1
+- Bugfix: Call to App::make('itemconfig') in the header would cause an error on dashboard pages
+- Bugfix: Fonts are now loaded locally which should no longer cause hanging issues when you have no internet connection
+- Bugfix: <=IE9 was having issues with the dropdown menu
+
+### 4.6.0
+- Support for smaller screens and mobile devices
+- Visible option for columns that accepts either a boolean or closure
 - Relationship constraints now work with hasMany and hasOne fields
 - There is now an `options_filter` option for relationship fields that lets you modify the query before getting the relationship options
 - Custom actions and saves now rebuild the supplied config file after performing the action
