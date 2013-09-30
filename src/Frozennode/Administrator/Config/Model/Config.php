@@ -400,6 +400,10 @@ class Config extends ConfigBase implements ConfigInterface {
 			if (!$field->getOption('external'))
 			{
 				$field->fillModel($model, $input->get($name, NULL));
+
+				if($model->{$name} == '') {
+					$model->__unset($name);
+				}
 			}
 			//if this is an "external" field (i.e. it's not a column on this model's table), unset it
 			else
