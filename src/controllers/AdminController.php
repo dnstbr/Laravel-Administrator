@@ -278,13 +278,13 @@ class AdminController extends Controller
 			} catch(Exception $e) {
 				$set_data = true;
 			}
-			
+
 			try {
 				$close = $action->getOption('close');
 			} catch(Exception $e) {
 				$close = false;
 			}
-			
+
 			$response = array('success' => true, 'data' => $model->toArray(), 'set_data' => $set_data, 'close' => $close);
 
 			//if it's a download response, flash the response to the seession and return the download link
@@ -458,7 +458,8 @@ class AdminController extends Controller
 
 		//get the inputted rows and the model rows
 		$rows = (int) Input::get('rows', 20);
-		$dataTable->setRowsPerPage(App::make('session'), 0, $rows);
+		//$dataTable->setRowsPerPage(App::make('session'), 0, $rows);
+		$dataTable->setRowsPerPage(App::make('session.store'), 0, $rows);
 
 		return Response::JSON(array('success' => true));
 	}
