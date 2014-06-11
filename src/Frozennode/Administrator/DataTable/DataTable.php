@@ -116,12 +116,12 @@ class DataTable {
 		//get things going by grouping the set
 		$table = $model->getTable();
 		$keyName = $model->getKeyName();
-		$query = $model->withTrashed()->groupBy($table . '.' . $keyName);
+		$query = $model->withTrashed();//->groupBy($table . '.' . $keyName);
 
 
 		//get the Illuminate\Database\Query\Builder instance and set up the count query
 		$dbQuery = $query->getQuery();
-		$countQuery = $dbQuery->getConnection()->table($table)->groupBy($table . '.' . $keyName);
+		$countQuery = $dbQuery->getConnection()->table($table);//->groupBy($table . '.' . $keyName);
 
 		//run the supplied query filter for both queries if it was provided
 		$this->config->runQueryFilter($dbQuery);
